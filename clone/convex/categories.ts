@@ -25,5 +25,6 @@ export const get = query ({
         const categoriesWithSubcategories = await Promise.all(
             categoriesWithSubcategoriesRelations
         )
+        return categoriesWithSubcategories;
     }
 })
