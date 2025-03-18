@@ -12,9 +12,9 @@ import { Description } from "@/components/description";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Images } from "@/components/images";
-import { TitleEditor } from "@/components/title-editor";
+import { TitleEditor } from "@/app/gig/omg/edit/title-editor";
 import { Label } from "@/components/ui/label";
-import { OffersEditor } from "@/components/offers-editor";
+import { OffersEditor } from "./_components/offers-editor";
 import { Sue_Ellen_Francisco } from "next/font/google";
 
 
@@ -25,8 +25,8 @@ interface EditPageProps{
 };
 
 const Edit = ({params}: EditPageProps) => {
-    const gig = useQuery(api.gig.get, {gigId: params.gigId as Id<"gigs">}); // need to cast it as a string
-    const published = useQuery(api.gig.isPublished, {gigId: params.gigId as Id<"gigs">});
+    const gig = useQuery(api.gig.get, {id: params.gigId as Id<"gigs">}); // need to cast it as a string
+    const published = useQuery(api.gig.isPublished, {id: params.gigId as Id<"gigs">});
     const {
         mutate: remove,
         pending: removePending,
