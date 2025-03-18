@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as categories from "../categories.js";
 import type * as gig from "../gig.js";
+import type * as gigMedia from "../gigMedia.js";
 import type * as seedCategories from "../seedCategories.js";
 import type * as seedSubcategories from "../seedSubcategories.js";
 import type * as users from "../users.js";
@@ -30,6 +31,7 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   categories: typeof categories;
   gig: typeof gig;
+  gigMedia: typeof gigMedia;
   seedCategories: typeof seedCategories;
   seedSubcategories: typeof seedSubcategories;
   users: typeof users;

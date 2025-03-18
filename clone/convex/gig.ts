@@ -72,9 +72,9 @@ export const get = query({
             lastOrder: lastOrder,
         }
 
-        const images = await ctx.db.query("gigImages").withIndex("by_gigId", (q) => q.eq("gigId", gig._id)).collect();
+        const images = await ctx.db.query("gigMedia").withIndex("by_gigId", (q) => q.eq("gigId", gig._id)).collect();
 
-        const imagesWithUrls = await Promise.all(images.mao(async(image) => {
+        const imagesWithUrls = await Promise.all(images.map(async(image) => {
             // have to generate the image url first
             const imageUrl = await ctx.storage.getUrl(image.storageId);
             if (!imageUrl){
@@ -90,4 +90,85 @@ export const get = query({
 
         return gigWithSellerAndLastOrderAndImages;
     }
+});
+
+export const isPublished = query({
+    args: { id: v.id("gigs") },
+    handler: async (ctx, args) => {
+        const gig = await ctx.db.get(args.id);
+        if (gig === null){
+            throw new Error("Gig not found");
+        }
+        return gig.published;
+    }
+});
+
+export const publish = mutation({
+    args: { id: v.id("gigs") },
+    handler: async (ctx, args) => {
+        const gig = await ctx.db.get(args.id);
+        if (gig === null){
+            throw new Error("Gig not found");
+        }
+
+        const media = await ctx.db.query("gigMedia").withIndex("by_gigId", (q) => q.eq("gigId", gig._id)).collect();
+
+        const offers = await ctx.db.query("offers").withIndex("by_gigId", (q) => q.eq("gigId", gig._id)).collect();
+
+        if (media.length === 0 || gig.description === "" || offers.length !== 3){
+            throw new Error("Gig must have at least 1 image and 3 offers");
+        }
+
+        await ctx.db.patch(gig._id, { published: true });
+
+        return gig;
+    }
+});
+
+export const unpublish = mutation({
+    args: { id: v.id("gigs") },
+    handler: async (ctx, args) => {
+        const gig = await ctx.db.get(args.id);
+        if (gig === null){
+            throw new Error("Gig not found");
+        }
+        await ctx.db.patch(args.id, { published: false });
+        return gig;
+    }
+})
+
+export const remove = mutation({
+    args: { id: v.id("gigs") },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) {
+            throw new Error("Unauthorized");
+        }
+
+        const user = await ctx.db
+        .query("users").withIndex("by_token", (q) => 
+            q.eq("tokenIdentifier", identity.tokenIdentifier)).unique();
+
+        if (user === null){
+            return;
+        }
+
+        const userId = user._id;
+
+        const existingFavourite = await ctx.db.query("userFavourites")
+        .withIndex("by_user_gig", (q) => q.eq("userId", userId).eq("gigId", args.id)).unique();
+
+        if(existingFavourite){
+            await ctx.db.delete(existingFavourite._id);
+        }
+
+        await ctx.db.delete(args.id);
+    }
+})
+
+
+const gigMedia = table("gigMedia", {
+    gigId: v.id("gigs"),
+    storageId: v.string(),
+    url: v.string(),
 });
