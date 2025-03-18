@@ -89,6 +89,5 @@ export const get = query({
         };
 
         return gigWithSellerAndLastOrderAndImages;
-        }
     }
 });
