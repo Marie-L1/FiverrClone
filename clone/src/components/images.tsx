@@ -6,12 +6,12 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-import { ImageWithUrlType } from "@/types"
 import Image from "next/image"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { MoreHorizontal, Trash2 } from "lucide-react"
-import { Actions } from "@/app/seller/[username]/manage-gigs/edit/[gigId]/_components/actions"
+import { Trash2 } from "lucide-react"
+import Actions from "../app/seller/[username]/manage-gigs/edit/[gigId]/_components/actions"
 import { useState } from "react"
+import { ImageWithUrlType } from "../../types";
 
 interface ImagesProps {
     images: ImageWithUrlType[];

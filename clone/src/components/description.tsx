@@ -1,7 +1,4 @@
 "use client";
-import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
-
 import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
@@ -9,6 +6,8 @@ import "@blocknote/react/style.css";
 import { useMutation } from "convex/react";
 import { AlertOctagon } from "lucide-react";
 import { toast } from "sonner";
+import { Id } from "../../convex/_generated/dataModel";
+import { api } from "../../convex/_generated/api";
 
 interface DescriptionProps {
     gigId: Id<"gigs">;

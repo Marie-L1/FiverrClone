@@ -1,6 +1,5 @@
 import { v } from "convex/values";
 import { internalMutation, internalQuery, query, action } from "./_generated/server";
-import { getgid, title } from "process";
 import { internal } from "./_generated/api";
 
 export const get = query({
