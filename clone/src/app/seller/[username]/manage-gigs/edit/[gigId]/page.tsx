@@ -8,13 +8,14 @@ import { useMutation, useQuery } from "convex/react";
 import Link from "next/link";
 import { FormEvent, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Description } from "../../../../../../components/description";
+import { Description } from "@/components/description";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Images } from "../../../../../../components/images";
-import { TitleEditor } from "../../../../../../components/title-editor";
+import { Images } from "@/components/images";
+import { TitleEditor } from "@/components/title-editor";
 import { Label } from "@/components/ui/label";
-import { OffersEditor } from "../../../../../../components/offers-editor";
+import { OffersEditor } from "@/components/offers-editor";
+import { Sue_Ellen_Francisco } from "next/font/google";
 
 
 interface EditPageProps{
@@ -126,7 +127,7 @@ const Edit = ({params}: EditPageProps) => {
                     Delete
                 </Button>
             </div>
-
+            {/* user can easily edit the title */}
             <TitleEditor
                 id={gig._id}
                 title={gig.title}
@@ -136,7 +137,6 @@ const Edit = ({params}: EditPageProps) => {
                     images={gig.images}
                     title={gig.title}
                     allowDelete={true}
-
                 />
             </div>
             <form onSubmit={handleSendImage} className="space-y-2">
@@ -160,16 +160,14 @@ const Edit = ({params}: EditPageProps) => {
                 </div>
             </form>
             <div className="flex rounded-md border border-zinc-300 items-center space-x-4 w-fit p-2 cursor-default">
-                <p className="text-muted-foreground">👨‍🎨 Creator: {"Vuk Rosic"}</p>
+                <p className="text-muted-foreground">Creator: {gig.seller.username}</p>
             </div>
 
             <OffersEditor
                 gigId={gig._id}
             />
-
             <h2 className="font-semibold">About this gig</h2>
         </div>
-
 
         <Description
             initialContent={gig.description}
@@ -177,7 +175,6 @@ const Edit = ({params}: EditPageProps) => {
             className="pb-40 mt-12 2xl:px-[200px] xl:px-[90px] xs:px-[17px]"
             gigId={gig._id}
         />
-
     </>
     )
 }
