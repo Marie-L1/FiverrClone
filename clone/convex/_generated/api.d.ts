@@ -16,6 +16,7 @@ import type {
 import type * as categories from "../categories.js";
 import type * as gig from "../gig.js";
 import type * as gigMedia from "../gigMedia.js";
+import type * as offers from "../offers.js";
 import type * as seedCategories from "../seedCategories.js";
 import type * as seedSubcategories from "../seedSubcategories.js";
 import type * as users from "../users.js";
@@ -32,6 +33,7 @@ declare const fullApi: ApiFromModules<{
   categories: typeof categories;
   gig: typeof gig;
   gigMedia: typeof gigMedia;
+  offers: typeof offers;
   seedCategories: typeof seedCategories;
   seedSubcategories: typeof seedSubcategories;
   users: typeof users;
