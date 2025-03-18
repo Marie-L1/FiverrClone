@@ -47,7 +47,7 @@ export const Images = ({
                                     </Actions>
                                 )}
                                 <Image
-                                    src={image.url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/2560px-Placeholder_view_vector.svg.png'}
+                                    src={image.url}
                                     alt={title}
                                     fill
                                     className="rounded-md object-cover"
